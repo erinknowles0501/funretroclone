@@ -8,7 +8,7 @@
             <button style="background: lime" @click="setColor('00FF00')">Green</button>
             <button style="background: white" @click="setColor('FFFFFF')">White</button>
         </div>
-        <h2 v-if="!editing" @click="startEditing">{{ lane.title }}</h2>
+        <h2 v-if="!editing" @click="startEditingLane">{{ lane.title }}</h2>
         <h2>
             <input
                 type="text"
@@ -20,27 +20,34 @@
             />
         </h2>
 
-        <button @click="creatingCard = true">Create card</button>
+        <button v-if="!creatingCard" @click="startCreatingCard">Create card</button>
 
-        <div v-if="creatingCard">
-            <textarea v-model="newCardText"></textarea>
-            <button @click="createCard">Create</button>
-        </div>
+        <Card v-for="card in cards" :key="card.id" :card="card" />
 
-        <div class="card" v-for="card in cards" :key="card.id">{{ card.text }}</div>
+        <input
+            type="text"
+            v-if="creatingCard"
+            v-model="newCardText"
+            @blur="createCard"
+            @keypress.enter="createCard"
+            ref="cardField"
+        />
     </div>
 </template>
 
 <script>
+import Card from "./Card";
 import { getters, actions } from "../utilities/store";
 
 export default {
     name: "Lane",
     props: ["lane", "sprintId"],
+    components: { Card },
     data() {
         return {
             creatingCard: false,
             newCardText: "",
+            showCardEdit: false,
             editing: false,
         };
     },
@@ -55,15 +62,21 @@ export default {
         },
     },
     methods: {
-        startEditing() {
-            this.editing = true;
+        startCreatingCard() {
+            this.creatingCard = true;
             this.$nextTick(() => {
-                this.$refs.titleField.focus();
+                this.$refs.cardField.focus();
             });
         },
         setColor(color) {
             this.lane.color = color;
             this.updateLane();
+        },
+        startEditingLane() {
+            this.editing = true;
+            this.$nextTick(() => {
+                this.$refs.titleField.focus();
+            });
         },
         async createCard() {
             await actions.createCard(
@@ -80,14 +93,12 @@ export default {
             await actions.init();
         },
         async updateLane() {
-            console.log("lane title before", this.lane.title);
             await actions.updateLane(
                 this.lane.id,
                 this.lane.title,
                 this.lane.color
             );
             await actions.init();
-            console.log("lane title after", this.lane.title);
             this.editing = false;
         },
     },
@@ -99,11 +110,5 @@ export default {
     height: 100%;
     width: 100%;
     padding: 1em;
-}
-
-.card {
-    background: rgba(255, 255, 255, 0.5);
-    padding: 1em;
-    margin-top: 0.2em;
 }
 </style>

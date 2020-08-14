@@ -53,4 +53,19 @@ class CardModel {
     }
 
 
+    public function update($id, $text) {
+        $query = "UPDATE $this->table_name
+        SET text='$text'
+        WHERE id='$id'";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success: updated $id!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
+    }
+
+
 }

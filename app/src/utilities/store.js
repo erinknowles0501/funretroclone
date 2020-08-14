@@ -71,17 +71,6 @@ export const actions = {
       .catch((err) => console.log(err));
   },
 
-  async deleteLane(id) {
-    await fetch("http://localhost:8888/lane/delete", {
-      method: "post",
-      body: id,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  },
-
   async updateLane(id, title, color) {
     let data = { id, title, color };
     data = JSON.stringify(data);
@@ -90,6 +79,17 @@ export const actions = {
     await fetch("http://localhost:8888/lane/update", {
       method: "post",
       body: data,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
+
+  async deleteLane(id) {
+    await fetch("http://localhost:8888/lane/delete", {
+      method: "post",
+      body: id,
     })
       .then((res) => {
         console.log(res);
@@ -110,6 +110,21 @@ export const actions = {
     console.log("createcard", data);
 
     await fetch("http://localhost:8888/card/create", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
+
+  async updateCard(id, text) {
+    let data = { id, text };
+    data = JSON.stringify(data);
+    console.log(data);
+
+    await fetch("http://localhost:8888/card/update", {
       method: "post",
       body: data,
     })

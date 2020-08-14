@@ -82,3 +82,12 @@ $data = json_decode(file_get_contents('php://input'));
 $cardModel = new CardModel();
 $cardModel->createNew($data->text, $data->sprintId, $data->laneId);
 });
+
+$router->respond("POST", "/card/update", function() {
+  require './models/CardModel.php';
+
+  $data = json_decode(file_get_contents('php://input'));
+
+  $cardModel = new CardModel();
+  $cardModel->update($data->id, $data->text);
+});

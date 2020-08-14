@@ -52,6 +52,21 @@ class LaneModel {
     }
 
 
+    public function update($id, $title, $color) {
+        $query = "UPDATE $this->table_name
+        SET title='$title', color='$color'
+        WHERE id='$id'";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success: updated $id!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
+    }
+
+
     public function destroy($id) {
         $query = "DELETE FROM $this->table_name WHERE id = '$id'";
 
@@ -64,19 +79,7 @@ class LaneModel {
         }
     }
 
-    public function update($id, $title, $color) {
-        $query = "UPDATE $this->table_name
-        SET title='$title', color='$color'
-        WHERE id='$id'";
 
-        $result = mysqli_query($this->db, $query);
-
-        if ($result) {
-            echo "Success: fully updated $id!";
-        } else {
-            echo "Not success :( ..." . $this->db->error;
-        }
-    }
 
 
 }
