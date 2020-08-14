@@ -20,8 +20,8 @@ const mutations = {
 //dgdg
 
 export const actions = {
-  async init(id) {
-    console.log("id in actions:", id);
+  async init() {
+    //  console.log("id in actions:", id);
     await fetch("http://localhost:8888/sprint/all").then((res) => {
       res.json().then(function(data) {
         console.log(data);
@@ -57,7 +57,7 @@ export const actions = {
   /* LANES */
   ///
   async createLane(title, color) {
-    let data = { title, color, cards: [] };
+    let data = { title, color };
     data = JSON.stringify(data);
     console.log(data);
 
@@ -75,6 +75,21 @@ export const actions = {
     await fetch("http://localhost:8888/lane/delete", {
       method: "post",
       body: id,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
+
+  async updateLane(id, title, color) {
+    let data = { id, title, color };
+    data = JSON.stringify(data);
+    console.log(data);
+
+    await fetch("http://localhost:8888/lane/update", {
+      method: "post",
+      body: data,
     })
       .then((res) => {
         console.log(res);

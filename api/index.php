@@ -54,6 +54,15 @@ $router->respond("POST", "/lane/delete", function() {
   $laneModel->destroy($id);
 });
 
+$router->respond("POST", "/lane/update", function() {
+  require './models/LaneModel.php';
+
+  $data = json_decode(file_get_contents('php://input'));
+
+  $laneModel = new LaneModel();
+  $laneModel->update($data->id, $data->title, $data->color);
+});
+
 
 
 

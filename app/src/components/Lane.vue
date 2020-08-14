@@ -1,7 +1,25 @@
 <template>
     <div class="lane" :style="`background: #${lane.color}`">
-        <button @click="deleteLane">Delete lane</button>
-        <h2>{{ lane.title }}</h2>
+        <div>
+            <button @click="deleteLane">Delete lane</button>
+            <button style="background: red" @click="setColor('FF0000')">Red</button>
+            <button style="background: cyan" @click="setColor('00FFFF')">Blue</button>
+            <button style="background: yellow" @click="setColor('FFFF00')">Yellow</button>
+            <button style="background: lime" @click="setColor('00FF00')">Green</button>
+            <button style="background: white" @click="setColor('FFFFFF')">White</button>
+        </div>
+        <h2 v-if="!editing" @click="startEditing">{{ lane.title }}</h2>
+        <h2>
+            <input
+                type="text"
+                v-if="editing"
+                v-model="lane.title"
+                @blur="updateLane"
+                @keypress.enter="updateLane"
+                ref="titleField"
+            />
+        </h2>
+
         <button @click="creatingCard = true">Create card</button>
 
         <div v-if="creatingCard">
@@ -23,6 +41,7 @@ export default {
         return {
             creatingCard: false,
             newCardText: "",
+            editing: false,
         };
     },
     computed: {
@@ -36,6 +55,16 @@ export default {
         },
     },
     methods: {
+        startEditing() {
+            this.editing = true;
+            this.$nextTick(() => {
+                this.$refs.titleField.focus();
+            });
+        },
+        setColor(color) {
+            this.lane.color = color;
+            this.updateLane();
+        },
         async createCard() {
             await actions.createCard(
                 this.newCardText,
@@ -49,6 +78,17 @@ export default {
         async deleteLane() {
             await actions.deleteLane(this.lane.id);
             await actions.init();
+        },
+        async updateLane() {
+            console.log("lane title before", this.lane.title);
+            await actions.updateLane(
+                this.lane.id,
+                this.lane.title,
+                this.lane.color
+            );
+            await actions.init();
+            console.log("lane title after", this.lane.title);
+            this.editing = false;
         },
     },
 };
