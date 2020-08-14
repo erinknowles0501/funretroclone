@@ -17,16 +17,14 @@ class LaneModel {
     }
 
     public function createNew($title, $color) {
-        $query = "INSERT INTO $this->table_name (title, color, cards) VALUES ('$title', '$color', '[]')";
-        // $query = "SELECT * FROM $this->table_name";
-        var_dump($query);
+        $query = "INSERT INTO $this->table_name (title, color) VALUES ('$title', '$color')";
+
         $result = mysqli_query($this->db, $query);
-        var_dump($result);
 
         if ($result) {
             echo "Success!";
         } else {
-        echo "Not success :(" . $this->db->error;
+            echo "Not success :( ..." . $this->db->error;
         }
     }
 
@@ -44,7 +42,6 @@ class LaneModel {
                     'id' => $row['id'],
                     'title' => $row['title'],
                     'color' => $row['color'],
-                    'cards' => $row['cards'],
                 );
             }
         }

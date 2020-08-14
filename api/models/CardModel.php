@@ -16,7 +16,16 @@ class CardModel {
       $this->db = $conn->getConnection();
     }
 
-    public function createNew() {
+    public function createNew($text, $sprint_id, $lane_id) {
+        $query = "INSERT INTO $this->table_name (text, sprint_id, lane_id) VALUES ('$text', '$sprint_id', '$lane_id')";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
     }
 
     public function getAll() {
@@ -34,6 +43,7 @@ class CardModel {
                     'text' => $row['text'],
                     'votes' => $row['votes'],
                     'sprint_id' => $row['sprint_id'],
+                    'lane_id' => $row['lane_id'],
                 );
             }
         }

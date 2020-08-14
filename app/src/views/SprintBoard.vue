@@ -5,7 +5,7 @@
         <button @click="createLane">Add lane</button>
 
         <div v-if="!loading" class="lanes">
-            <Lane v-for="lane in lanes" :key="lane.id" :lane="lane" />
+            <Lane v-for="lane in lanes" :key="lane.id" :lane="lane" :sprintId="sprint.id" />
         </div>
     </div>
 </template>

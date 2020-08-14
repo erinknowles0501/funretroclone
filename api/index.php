@@ -24,12 +24,7 @@ $router->respond("GET", "/sprint/all", function() {
     $sprintModel->getAll();
 });
 
-$router->respond("GET", "/card/all", function() {
-    require './models/CardModel.php';
- 
-    $cardModel = new CardModel();
-    $cardModel->getAll();
-});
+
 
 
 $router->respond("GET", "/lane/all", function() {
@@ -46,4 +41,22 @@ $router->respond("POST", "/lane/create", function() {
 
     $laneModel = new LaneModel();
     $laneModel->createNew($data->title, $data->color);
+});
+
+
+
+$router->respond("GET", "/card/all", function() {
+  require './models/CardModel.php';
+
+  $cardModel = new CardModel();
+  $cardModel->getAll();
+});
+
+$router->respond("POST", "/card/create", function() {
+require './models/CardModel.php';
+
+$data = json_decode(file_get_contents('php://input'));
+
+$cardModel = new CardModel();
+$cardModel->createNew($data->text, $data->sprintId, $data->laneId);
 });

@@ -44,6 +44,9 @@ export const actions = {
     });
   },
 
+  ///
+  /* Sprints */
+  ///
   getSprint(id) {
     return getters.sprints().find((sprint) => {
       return sprint.id == id;
@@ -61,8 +64,32 @@ export const actions = {
     await fetch("http://localhost:8888/lane/create", {
       method: "post",
       body: data,
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
+
+  ///
+  /* CARDS */
+  ///
+  async createCard(text, sprintId, laneId) {
+    let data = {
+      text,
+      sprintId,
+      laneId,
+    };
+    data = JSON.stringify(data);
+    console.log("createcard", data);
+
+    await fetch("http://localhost:8888/card/create", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   },
 };
