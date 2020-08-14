@@ -1,5 +1,6 @@
 <template>
     <div class="lane" :style="`background: #${lane.color}`">
+        <button @click="deleteLane">Delete lane</button>
         <h2>{{ lane.title }}</h2>
         <button @click="creatingCard = true">Create card</button>
 
@@ -27,7 +28,6 @@ export default {
     computed: {
         cards() {
             return getters.cards().filter((card) => {
-                console.log(card.lane_id, this.lane.id);
                 return (
                     card.lane_id === this.lane.id &&
                     card.sprint_id === this.sprintId
@@ -46,6 +46,10 @@ export default {
             this.creatingCard = false;
             this.newCardText = "";
         },
+        async deleteLane() {
+            await actions.deleteLane(this.lane.id);
+            await actions.init();
+        },
     },
 };
 </script>
@@ -55,5 +59,11 @@ export default {
     height: 100%;
     width: 100%;
     padding: 1em;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1em;
+    margin-top: 0.2em;
 }
 </style>

@@ -16,18 +16,6 @@ class LaneModel {
       $this->db = $conn->getConnection();
     }
 
-    public function createNew($title, $color) {
-        $query = "INSERT INTO $this->table_name (title, color) VALUES ('$title', '$color')";
-
-        $result = mysqli_query($this->db, $query);
-
-        if ($result) {
-            echo "Success!";
-        } else {
-            echo "Not success :( ..." . $this->db->error;
-        }
-    }
-
     public function getAll() {
 
         $query = "SELECT * FROM $this->table_name";
@@ -48,6 +36,32 @@ class LaneModel {
 
         echo json_encode($sprints);
 
+    }
+
+
+    public function createNew($title, $color) {
+        $query = "INSERT INTO $this->table_name (title, color) VALUES ('$title', '$color')";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
+    }
+
+
+    public function destroy($id) {
+        $query = "DELETE FROM $this->table_name WHERE id = '$id'";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success fully deleted $id!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
     }
 
 

@@ -71,6 +71,17 @@ export const actions = {
       .catch((err) => console.log(err));
   },
 
+  async deleteLane(id) {
+    await fetch("http://localhost:8888/lane/delete", {
+      method: "post",
+      body: id,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
+
   ///
   /* CARDS */
   ///

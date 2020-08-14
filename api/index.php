@@ -27,6 +27,8 @@ $router->respond("GET", "/sprint/all", function() {
 
 
 
+
+
 $router->respond("GET", "/lane/all", function() {
     require './models/LaneModel.php';
  
@@ -42,6 +44,17 @@ $router->respond("POST", "/lane/create", function() {
     $laneModel = new LaneModel();
     $laneModel->createNew($data->title, $data->color);
 });
+
+$router->respond("POST", "/lane/delete", function() {
+  require './models/LaneModel.php';
+
+  $id = json_decode(file_get_contents('php://input'));
+
+  $laneModel = new LaneModel();
+  $laneModel->destroy($id);
+});
+
+
 
 
 
