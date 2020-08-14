@@ -49,4 +49,20 @@ export const actions = {
       return sprint.id == id;
     });
   },
+
+  ///
+  /* LANES */
+  ///
+  async createLane(title, color) {
+    let data = { title, color, cards: [] };
+    data = JSON.stringify(data);
+    console.log(data);
+
+    await fetch("http://localhost:8888/lane/create", {
+      method: "post",
+      body: data,
+    }).then((res) => {
+      console.log(res);
+    });
+  },
 };

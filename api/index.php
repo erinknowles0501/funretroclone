@@ -13,15 +13,15 @@ $router = new Router();
 
 // Respond to a home page request
 $router->respond("GET", "/", function() {
-  echo 'Root';
+    echo 'Root';
 });
 
 // Respond to a delete request at the supplied URI
 $router->respond("GET", "/sprint/all", function() {
-   require './models/SprintModel.php';
+    require './models/SprintModel.php';
 
-   $sprintModel = new SprintModel();
-   $sprintModel->getAll();
+    $sprintModel = new SprintModel();
+    $sprintModel->getAll();
 });
 
 $router->respond("GET", "/card/all", function() {
@@ -31,9 +31,19 @@ $router->respond("GET", "/card/all", function() {
     $cardModel->getAll();
 });
 
+
 $router->respond("GET", "/lane/all", function() {
     require './models/LaneModel.php';
  
-    $cardModel = new LaneModel();
-    $cardModel->getAll();
+    $laneModel = new LaneModel();
+    $laneModel->getAll();
+});
+
+$router->respond("POST", "/lane/create", function() {
+    require './models/LaneModel.php';
+
+    $data = json_decode(file_get_contents('php://input'));
+
+    $laneModel = new LaneModel();
+    $laneModel->createNew($data->title, $data->color);
 });

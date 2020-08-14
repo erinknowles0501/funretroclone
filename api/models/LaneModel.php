@@ -16,7 +16,18 @@ class LaneModel {
       $this->db = $conn->getConnection();
     }
 
-    public function createNew() {
+    public function createNew($title, $color) {
+        $query = "INSERT INTO $this->table_name (title, color, cards) VALUES ('$title', '$color', '[]')";
+        // $query = "SELECT * FROM $this->table_name";
+        var_dump($query);
+        $result = mysqli_query($this->db, $query);
+        var_dump($result);
+
+        if ($result) {
+            echo "Success!";
+        } else {
+        echo "Not success :(" . $this->db->error;
+        }
     }
 
     public function getAll() {
