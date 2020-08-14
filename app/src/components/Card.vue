@@ -45,7 +45,10 @@ export default {
             this.saving = false;
             this.editingCard = false;
         },
-        deleteCard() {},
+        async deleteCard() {
+            await actions.deleteCard(this.card.id);
+            await actions.init();
+        },
     },
 };
 </script>

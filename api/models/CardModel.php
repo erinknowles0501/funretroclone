@@ -67,5 +67,17 @@ class CardModel {
         }
     }
 
+    public function destroy($id) {
+        $query = "DELETE FROM $this->table_name WHERE id = '$id'";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            echo "Success fully deleted $id!";
+        } else {
+            echo "Not success :( ..." . $this->db->error;
+        }
+    }
+
 
 }

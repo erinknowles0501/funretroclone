@@ -45,14 +45,6 @@ $router->respond("POST", "/lane/create", function() {
     $laneModel->createNew($data->title, $data->color);
 });
 
-$router->respond("POST", "/lane/delete", function() {
-  require './models/LaneModel.php';
-
-  $id = json_decode(file_get_contents('php://input'));
-
-  $laneModel = new LaneModel();
-  $laneModel->destroy($id);
-});
 
 $router->respond("POST", "/lane/update", function() {
   require './models/LaneModel.php';
@@ -61,6 +53,15 @@ $router->respond("POST", "/lane/update", function() {
 
   $laneModel = new LaneModel();
   $laneModel->update($data->id, $data->title, $data->color);
+});
+
+$router->respond("POST", "/lane/delete", function() {
+  require './models/LaneModel.php';
+
+  $id = json_decode(file_get_contents('php://input'));
+
+  $laneModel = new LaneModel();
+  $laneModel->destroy($id);
 });
 
 
@@ -90,4 +91,13 @@ $router->respond("POST", "/card/update", function() {
 
   $cardModel = new CardModel();
   $cardModel->update($data->id, $data->text);
+});
+
+$router->respond("POST", "/card/delete", function() {
+  require './models/CardModel.php';
+
+  $id = json_decode(file_get_contents('php://input'));
+
+  $cardModel = new CardModel();
+  $cardModel->destroy($id);
 });

@@ -133,4 +133,15 @@ export const actions = {
       })
       .catch((err) => console.log(err));
   },
+
+  async deleteCard(id) {
+    await fetch("http://localhost:8888/card/delete", {
+      method: "post",
+      body: id,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  },
 };
