@@ -10,14 +10,20 @@
 <script>
 // Implement Storybook for funsies
 
+//import { actions } from "./utilities/store";
+
 export default {
     name: "App",
 
     data() {
         return {
-            //
+            loading: true,
         };
     },
+    // async created() {
+    //     await actions.init(this.$route.params.id);
+    //     this.loading = false;
+    // },
     // async created() {
     //   const vm = this;
     //   await fetch("http://localhost:8888/sprint/all").then((res) => {

@@ -4,7 +4,7 @@
 
         <button @click="createLane">Add lane</button>
 
-        <div v-if="!loading">
+        <div v-if="!loading" class="lanes">
             <Lane v-for="lane in lanes" :key="lane.id" :lane="lane" />
         </div>
     </div>
@@ -48,3 +48,11 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.lanes {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+</style>
